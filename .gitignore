@@ -1,0 +1,32 @@
+# Build output
+/build/
+/out/
+/.gradle/
+
+# MkDocs output
+/site/
+
+# Gradle wrapper cache/runtime downloads
+/gradle/wrapper/dists/
+
+# IDE
+/.idea/
+*.iml
+*.ipr
+*.iws
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Local agent scratch (supplied jars, session plans)
+/.agents/
+
+# Codex local session state
+/.codex/

@@ -1,0 +1,34 @@
+plugins {
+    id 'com.github.jruk8.plugin-conventions' version '1.4.8'
+    id 'maven-publish'
+}
+
+// Match the JitPack coordinate so the engine's composite build
+// substitutes the sibling checkout (the conventions default
+// group does not match and would silently skip substitution).
+group = 'com.github.jruk8'
+
+// Library jar: the plain jar is the artifact (composite
+// substitution and JitPack both consume it), so re-enable it
+// and drop the shadow variant the conventions prefer.
+tasks.named('jar') {
+    enabled = true
+}
+tasks.named('shadowJar') {
+    enabled = false
+}
+
+// Publishes the API for companion plugins. The coordinate matches
+// the JitPack coordinate for this repository
+// (com.github.jruk8:JManhunt-API:<sha>); locally, run
+// `./gradlew publishToMavenLocal` and add `mavenLocal()` to the
+// consumer. Paper stays compileOnly: companions bring their own.
+publishing {
+    publications {
+        api(MavenPublication) {
+            groupId = 'com.github.jruk8'
+            artifactId = 'JManhunt-API'
+            from components.java
+        }
+    }
+}
