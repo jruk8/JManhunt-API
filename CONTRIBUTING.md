@@ -65,9 +65,7 @@ Use [Conventional Commits](https://www.conventionalcommits.org/):
 [optional body]
 ```
 
-Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`.
-Describe the change only: no `Phase N`, agent, session, or other
-process remarks in commit messages.
+Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`..
 
 ## Pull Request Guidelines
 
