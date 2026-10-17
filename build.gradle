@@ -1,10 +1,27 @@
 plugins {
     id 'java-library'
     id 'checkstyle'
+    id 'pl.allegro.tech.build.axion-release' version '1.21.3'
     id 'maven-publish'
 }
 
 group = 'com.github.jruk8'
+
+// Tag-based versions (v1.0.0), same convention as JManhunt and
+// the validator: pushing a tag versions the jar and fires the
+// release workflow. Untagged builds (CI, JitPack SHAs) resolve
+// to a snapshot and still build.
+scmVersion {
+    repository {
+        pushTagsOnly = true
+    }
+    tag {
+        prefix = 'v'
+        versionSeparator = ''
+    }
+}
+
+project.version = scmVersion.version
 
 java {
     toolchain {
@@ -53,12 +70,22 @@ check {
     dependsOn 'checkstyleMain', 'checkstyleTest'
 }
 
+tasks.named('jar').configure {
+    manifest {
+        attributes(
+                'Implementation-Title': 'JManhunt-API',
+                'Implementation-Version': project.version
+        )
+    }
+}
+
 // Publishes the API for companion plugins. The coordinate matches
 // the JitPack coordinate for this repository
-// (com.github.jruk8:JManhunt-API:<sha>); locally, run
+// (com.github.jruk8:JManhunt-API:<tag>); locally, run
 // `./gradlew publishToMavenLocal` and add `mavenLocal()` to the
 // consumer. The plain jar is the artifact: JitPack builds it via
-// publishToMavenLocal, the engine composites the same output.
+// publishToMavenLocal, the engine composites the same output,
+// and the release workflow uploads it to GitHub releases.
 publishing {
     publications {
         api(MavenPublication) {

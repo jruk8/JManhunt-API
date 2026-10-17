@@ -1,13 +1,17 @@
-# JManhunt-API
+<div align="center">
 
-Public API for both free and premium JManhunt users. Companion
-plugins read live matches, lobbies, players, compass targets,
-and scores, run match actions, resolve `%jmanhunt_*%`
-placeholders, toggle modifiers, and listen to match events.
-The engine bundles these classes, so companions compile
-against this artifact and ship nothing extra.
+![JManhunt-API banner](docs/assets/api-banner-1280x640.png)
 
-## Coordinates
+<h3>Lightweight and extensible API for JManhunt.</h3>
+
+### [Releases](https://github.com/jruk8/JManhunt-API/releases) · [API Docs](https://jruk8.github.io/JManhunt/advanced/api/) · [JManhunt](https://github.com/jruk8/JManhunt)
+
+
+</div>
+
+# Quick Start 🔌
+
+1. Add the API (`compileOnly`):
 
 ```groovy
 repositories {
@@ -15,54 +19,86 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'com.github.jruk8:JManhunt-API:<commit-sha>'
+    compileOnly 'com.github.jruk8:JManhunt-API:<tag>'
 }
 ```
 
-Pin a full commit SHA (the engine does the same). For local
-development, `./gradlew publishToMavenLocal` from this
-checkout and add `mavenLocal()` to the consumer. Companions
-also need Paper API itself (compileOnly), which this
-artifact does not bring.
-
-Your plugin needs JManhunt present:
+2. Require JManhunt in your `plugin.yml`:
 
 ```yaml
-depend:
-  - JManhunt
+depend: [JManhunt]
 ```
 
-## Usage
+3. Look it up and register in `onEnable`:
 
 ```java
-Optional<JManhuntApi> api = JManhuntApi.lookup();
-api.ifPresent(present -> present.registerAddon(this, new ApiVersion(1, 0, 0)));
+JManhuntApi.lookup().ifPresent(api ->
+    api.registerAddon(this, new ApiVersion(1, 0, 0)));
 ```
 
-The full reference (services, models, events, versioning,
-thread rules, examples) lives on the engine docs page:
-`docs/advanced/api.md` in the JManhunt repository.
+**That's it!** Pin a release tag (`v1.0.0` for the first release), and the services below are ready on the main thread.
 
-## Versioning
+### Example
 
-Semantic: same major plus enough minor stays compatible
-(see `ApiVersion.compatible`). Additive changes bump the
-minor, breaking changes bump the major. JManhunt-Challenges
-and friends pin a commit SHA per release line.
+A minimal companion: bonus points per kill, announced when the game begins.
+
+```java
+public final class MyAddon extends JavaPlugin implements Listener {
+    private JManhuntApi api;
+
+    @Override
+    public void onEnable() {
+        api = JManhuntApi.lookup()
+            .orElseThrow(() -> new IllegalStateException("JManhunt missing"));
+        api.registerAddon(this, new ApiVersion(1, 0, 0));
+        getServer().getPluginManager().registerEvents(this, this);
+    }
+
+    @EventHandler
+    public void onBegin(GameBeginEvent event) {
+        api.matches().match(event.getMatchId()).ifPresent(match ->
+            getLogger().info("Match " + match.matchId()
+                + " begun with " + match.runners().size() + " runners!"));
+    }
+
+    @EventHandler
+    public void onKill(MatchPlayerKillEvent event) {
+        api.scores().adjustScore(event.getMatchId(), event.getKillerId(), 10);
+    }
+}
+```
+
+The full reference (services, models, events) lives on the [API docs page](https://jruk8.github.io/JManhunt/advanced/api/).
+
+# Features
+
+- **Live matches** » Read every match, start, fast-forward, and cancel through the same paths as the commands.
+- **Players and lobbies** » Roles, participation, and lobby membership, observed live.
+- **Compass targets** » What each hunter tracks, with in-game accuracy rules applied.
+- **Scores** » Live ledgers plus bonus/penalty adjustments that MVP picks and end reports see.
+- **Placeholders** » Resolve `%jmanhunt_*%` keys in code, no PlaceholderAPI dependency.
+- **Modifiers** » Toggle modifiers and presets globally, like the operations panel.
+- **Events** » Match lifecycle, kills, deaths, combat, progression, and role changes on the main thread.
+
+Unknown ids read as empty (empty optionals, empty collections), never null and never thrown.
+
+# Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the build, versioning, and PR guidelines.
+
+### Requirements
+
+- Server Software » [Paper 26.2+](https://papermc.io/downloads/paper)
+- Java Version » **Java 25**
+- Engine » **JManhunt** installed (companions also need Paper API itself, `compileOnly`)
+
+### Links
+
+- [Releases](https://github.com/jruk8/JManhunt-API/releases)
+- [API Docs](https://jruk8.github.io/JManhunt/advanced/api/)
+- [JManhunt](https://modrinth.com/plugin/jmanhunt)
+- [Discord](https://discord.com/invite/hkWmCVmWDC)
 
 ## License
 
-Dual-licensed:
-
-- Everyone: AGPL-3.0 (see LICENSE). Companions you
-  distribute or host publicly must share their source.
-- JMH-Premium owners: additionally MIT (see
-  LICENSE-COMMERCIAL). Your purchase covers your team, for
-  all API versions and any engine edition, and companions
-  you release under it may stay closed source. Your receipt
-  is your proof; there are no keys or activation. Refunding
-  ends the exception for future work, and it does not
-  transfer.
-
-The license files are authoritative; this summary is not
-legal advice.
+Dual-licensed: AGPL-3.0 (see [LICENSE](LICENSE)), or MIT for JMH-Premium owners (see [LICENSE-COMMERCIAL](LICENSE-COMMERCIAL)).
