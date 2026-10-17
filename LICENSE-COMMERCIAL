@@ -1,0 +1,59 @@
+JManhunt-API Commercial License Exception
+
+Copyright (c) 2026 jruk
+
+This file grants an additional license to the JManhunt-API
+software, which is otherwise distributed under the GNU Affero
+General Public License v3.0 (see LICENSE).
+
+1. Who qualifies. If you (an individual) or your team or
+   organization (collectively, "you") have purchased JMH-Premium,
+   the paid edition of the JManhunt plugin, you are licensed to
+   use JManhunt-API under the MIT terms stated below, as an
+   alternative to the AGPL. Your purchase receipt (BuiltByBit,
+   SpigotMC, PayPal, or equivalent record) is your proof of
+   purchase; there are no keys, accounts, or activation steps.
+
+2. Scope. This exception covers all versions of JManhunt-API and
+   companions built against it for use with any edition of the
+   JManhunt engine, free or premium. Companions you distribute
+   under this exception may be closed source.
+
+3. Non-transferable. This exception belongs to the purchaser and
+   their team. It does not transfer with a resold account,
+   transferred server, or handed-off project, unless the new
+   party independently qualifies through their own purchase.
+
+4. Refunds and chargebacks. If you refund or charge back your
+   JMH-Premium purchase, this exception ends for future work from
+   that date: companions you already distributed under it stay
+   licensed, but new releases and new companions fall back to
+   the AGPL.
+
+5. No other change. Everything not granted here remains governed
+   by the AGPL. This exception does not cover the JManhunt engine
+   itself or any other jruk software.
+
+MIT terms for qualified purchasers (sections 1-4 above):
+
+MIT License
+
+Copyright (c) 2026 jruk
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

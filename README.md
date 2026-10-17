@@ -52,6 +52,17 @@ and friends pin a commit SHA per release line.
 
 ## License
 
-AGPL-3.0 (see LICENSE). Companion authors should know
-that linking AGPL code has copyleft implications for
-their own distribution.
+Dual-licensed:
+
+- Everyone: AGPL-3.0 (see LICENSE). Companions you
+  distribute or host publicly must share their source.
+- JMH-Premium owners: additionally MIT (see
+  LICENSE-COMMERCIAL). Your purchase covers your team, for
+  all API versions and any engine edition, and companions
+  you release under it may stay closed source. Your receipt
+  is your proof; there are no keys or activation. Refunding
+  ends the exception for future work, and it does not
+  transfer.
+
+The license files are authoritative; this summary is not
+legal advice.
