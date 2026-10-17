@@ -20,9 +20,11 @@ public interface ModifierService {
     Optional<ModifierInfo> modifier(String id);
 
     /**
-     * Enables or disables one modifier or preset globally.
-     * False for unknown ids and when the edition cap
-     * refuses the change.
+     * Enables or disables one modifier or preset globally
+     * (a preset flips every transitive member). False for
+     * unknown ids; edition caps apply at match sync as in
+     * game. Known ids always return true, even when the
+     * flag already held the value.
      */
     boolean setEnabled(String id, boolean enabled);
 }

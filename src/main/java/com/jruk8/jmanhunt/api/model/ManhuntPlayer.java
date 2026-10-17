@@ -26,7 +26,7 @@ public interface ManhuntPlayer {
     /** False once eliminated while the match runs. */
     boolean alive();
 
-    /** Lives remaining in the live match, 0 outside one. */
+    /** Lives remaining in the live match, -1 for unlimited, 0 outside one. */
     int livesLeft();
 
     /** Live match score, at minimum 0, 0 outside a match. */

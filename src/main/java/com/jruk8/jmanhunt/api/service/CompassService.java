@@ -11,6 +11,6 @@ import java.util.UUID;
  */
 public interface CompassService {
 
-    /** What one hunter tracks, empty when tracking nothing. */
-    Optional<CompassTarget> targetOf(UUID hunterId);
+    /** What one holder tracks, empty when tracking nothing. */
+    Optional<CompassTarget> targetOf(UUID holderId);
 }
