@@ -1,28 +1,64 @@
 plugins {
-    id 'com.github.jruk8.plugin-conventions' version '1.4.8'
+    id 'java-library'
+    id 'checkstyle'
     id 'maven-publish'
 }
 
-// Match the JitPack coordinate so the engine's composite build
-// substitutes the sibling checkout (the conventions default
-// group does not match and would silently skip substitution).
 group = 'com.github.jruk8'
 
-// Library jar: the plain jar is the artifact (composite
-// substitution and JitPack both consume it), so re-enable it
-// and drop the shadow variant the conventions prefer.
-tasks.named('jar') {
-    enabled = true
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
 }
-tasks.named('shadowJar') {
-    enabled = false
+
+repositories {
+    maven {
+        name = 'papermc'
+        url = 'https://repo.papermc.io/repository/maven-public/'
+    }
+    mavenCentral()
+}
+
+dependencies {
+    // Paper API only for Bukkit types (events, Plugin, players).
+    // compileOnly: the engine bundles the API, companions bring
+    // their own Paper, and JitPack consumers get no transitive deps.
+    compileOnly("io.papermc.paper:paper-api:${paperApiVersion}")
+    testImplementation("io.papermc.paper:paper-api:${paperApiVersion}")
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
+    testImplementation 'org.mockito:mockito-core:5.23.0'
+}
+
+checkstyle {
+    toolVersion = '10.17.0'
+    configFile = file('config/checkstyle/checkstyle.xml')
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    // Paper 26.2 itself ships v69 bytecode, so the whole
+    // ecosystem (servers, engine, companions) already
+    // builds on 25: match it instead of downleveling.
+    options.release = 25
+}
+
+test {
+    useJUnitPlatform()
+}
+
+check {
+    dependsOn 'checkstyleMain', 'checkstyleTest'
 }
 
 // Publishes the API for companion plugins. The coordinate matches
 // the JitPack coordinate for this repository
 // (com.github.jruk8:JManhunt-API:<sha>); locally, run
 // `./gradlew publishToMavenLocal` and add `mavenLocal()` to the
-// consumer. Paper stays compileOnly: companions bring their own.
+// consumer. The plain jar is the artifact: JitPack builds it via
+// publishToMavenLocal, the engine composites the same output.
 publishing {
     publications {
         api(MavenPublication) {
