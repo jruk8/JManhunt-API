@@ -79,6 +79,7 @@ The full reference (services, models, events) lives on the [API docs page](https
 - **Placeholders** » Resolve `%jmanhunt_*%` keys in code, no PlaceholderAPI dependency.
 - **Modifiers** » Toggle modifiers and presets globally, like the operations panel.
 - **Events** » Match lifecycle, kills, deaths, combat, progression, and role changes on the main thread.
+- **Prepare hooks** » Run async setup before or after the engine's own match preparation via your addon handle.
 
 Unknown ids read as empty (empty optionals, empty collections), never null and never thrown.
 

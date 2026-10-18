@@ -16,7 +16,7 @@ public record ApiVersion(int major, int minor, int patch)
         implements Comparable<ApiVersion> {
 
     /** The version this artifact was released with. */
-    public static final ApiVersion CURRENT = new ApiVersion(1, 0, 0);
+    public static final ApiVersion CURRENT = new ApiVersion(1, 1, 0);
 
     /**
      * Parses {@code "major.minor.patch"}; malformed input yields empty.
