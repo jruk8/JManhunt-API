@@ -6,7 +6,7 @@ package com.jruk8.jmanhunt.api.model;
  * trace.
  */
 public enum StartResult {
-    /** The match started. */
+    /** The match started, or entered preparing with teleports pending. */
     OK,
     /** No lobby answers that id. */
     UNKNOWN_LOBBY,
