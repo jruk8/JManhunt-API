@@ -4,7 +4,7 @@
 
 <h3>Lightweight and extensible API for JManhunt.</h3>
 
-### [Releases](https://github.com/jruk8/JManhunt-API/releases) · [API Docs](https://jruk8.github.io/JManhunt/advanced/api/) · [JManhunt](https://github.com/jruk8/JManhunt)
+### [Releases](https://github.com/jruk8/JManhunt-API/releases) · [API Docs](https://jruk8.github.io/JManhunt/advanced/api/) · [JManhunt](https://modrinth.com/plugin/jmanhunt)
 
 
 </div>
