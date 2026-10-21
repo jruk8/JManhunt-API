@@ -12,6 +12,8 @@ import com.jruk8.jmanhunt.api.event.MatchRespawnEvent;
 import com.jruk8.jmanhunt.api.event.ModifierToggleEvent;
 import com.jruk8.jmanhunt.api.event.PlayerJoinMatchEvent;
 import com.jruk8.jmanhunt.api.event.PlayerLeaveMatchEvent;
+import com.jruk8.jmanhunt.api.event.PlayerMatchPenaltyEvent;
+import com.jruk8.jmanhunt.api.event.PlayerRankedPenaltyEvent;
 import com.jruk8.jmanhunt.api.event.PlayerRoleChangeEvent;
 import java.util.Optional;
 import java.util.OptionalLong;
@@ -47,6 +49,20 @@ class ApiEventsTest {
                 new PlayerRoleChangeEvent(7L, id, Role.HUNTER, Role.SPECTATOR);
         assertEquals(Role.HUNTER, change.getOldRole());
         assertEquals(Role.SPECTATOR, change.getNewRole());
+    }
+
+    @Test
+    void penaltyEventsCarryIdsAndStrikes() {
+        UUID id = UUID.randomUUID();
+        PlayerMatchPenaltyEvent plain = new PlayerMatchPenaltyEvent(7L, id);
+        assertEquals(7L, plain.getMatchId());
+        assertEquals(id, plain.getPlayerId());
+        PlayerRankedPenaltyEvent ranked =
+                new PlayerRankedPenaltyEvent(7L, id, 3, 1_800_000L);
+        assertEquals(7L, ranked.getMatchId());
+        assertEquals(id, ranked.getPlayerId());
+        assertEquals(3, ranked.getStrikes());
+        assertEquals(1_800_000L, ranked.getCooldownUntilMillis());
     }
 
     @Test

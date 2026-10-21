@@ -6,6 +6,7 @@ import com.jruk8.jmanhunt.api.service.MatchService;
 import com.jruk8.jmanhunt.api.service.ModifierService;
 import com.jruk8.jmanhunt.api.service.PlaceholderService;
 import com.jruk8.jmanhunt.api.service.PlayerService;
+import com.jruk8.jmanhunt.api.service.QueueService;
 import com.jruk8.jmanhunt.api.service.ScoreService;
 import java.util.Optional;
 import org.bukkit.Bukkit;
@@ -71,6 +72,9 @@ public interface JManhuntApi {
 
     /** Global modifier and preset toggles. */
     ModifierService modifiers();
+
+    /** Quick Match queues: actionbar points plus penalty reads. */
+    QueueService queues();
 
     /**
      * Registers one addon, checking API compatibility up
