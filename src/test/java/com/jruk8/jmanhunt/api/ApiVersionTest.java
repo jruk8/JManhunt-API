@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 class ApiVersionTest {
 
     @Test
-    void currentIsOneOneZero() {
-        assertEquals(new ApiVersion(1, 1, 0), ApiVersion.CURRENT);
-        assertEquals("1.1.0", ApiVersion.CURRENT.toString());
+    void currentIsOneTwoZero() {
+        assertEquals(new ApiVersion(1, 2, 0), ApiVersion.CURRENT);
+        assertEquals("1.2.0", ApiVersion.CURRENT.toString());
     }
 
     @Test
