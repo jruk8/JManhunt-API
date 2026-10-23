@@ -15,10 +15,13 @@ import com.jruk8.jmanhunt.api.event.PlayerLeaveMatchEvent;
 import com.jruk8.jmanhunt.api.event.PlayerMatchPenaltyEvent;
 import com.jruk8.jmanhunt.api.event.PlayerRankedPenaltyEvent;
 import com.jruk8.jmanhunt.api.event.PlayerRoleChangeEvent;
+import com.jruk8.jmanhunt.api.event.TournamentRunEndEvent;
+import com.jruk8.jmanhunt.api.model.TournamentRunResult;
 import java.util.Optional;
 import java.util.OptionalLong;
 import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
@@ -99,6 +102,33 @@ class ApiEventsTest {
                 new GameBeginEvent(1L).getHandlers());
         assertSame(CombatHitEvent.getHandlerList(), new CombatHitEvent(
                 1L, UUID.randomUUID(), UUID.randomUUID(), 1.0).getHandlers());
+    }
+
+    @Test
+    void tournamentRunEndCarriesFinalNumbers() {
+        UUID player = UUID.randomUUID();
+        UUID party = UUID.randomUUID();
+        TournamentRunResult result = new TournamentRunResult(3, "Tournament 3",
+                true, 5, true, false, true, player, "Steve", party,
+                TournamentRunResult.Result.LOSE, 3, 3, 2, 1, 0, 1, 0, 2, 3,
+                35, -18, 17, false);
+        TournamentRunEndEvent event = new TournamentRunEndEvent(result);
+        assertSame(result, event.getResult());
+        assertEquals(3, event.getResult().tournamentId());
+        assertEquals(TournamentRunResult.Result.LOSE, event.getResult().result());
+        assertEquals(35, event.getResult().pooledGains());
+        assertEquals(-18, event.getResult().lossApplied());
+        assertEquals(17, event.getResult().netChange());
+        assertSame(TournamentRunEndEvent.getHandlerList(), event.getHandlers());
+    }
+
+    @Test
+    void tournamentRunEndOmitsEloWhenStandard() {
+        TournamentRunResult result = new TournamentRunResult(1, "Tournament 1",
+                false, -1, true, false, false, UUID.randomUUID(), "Alex", null,
+                TournamentRunResult.Result.WIN, 1, 2, 2, 0, 0, 0, 0, 2, 2,
+                null, null, null, false);
+        assertNull(new TournamentRunEndEvent(result).getResult().netChange());
     }
 
     @Test
