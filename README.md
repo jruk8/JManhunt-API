@@ -91,7 +91,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the build, versioning, and PR guideli
 
 - Server Software » [Paper 26.2+](https://papermc.io/downloads/paper)
 - Java Version » **Java 25**
-- Engine » **JManhunt** installed (companions also need Paper API itself, `compileOnly`)
+- Engine » **JManhunt** installed (also `compileOnly` Paper API)
 
 ### Links
 
